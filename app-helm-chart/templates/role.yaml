@@ -1,15 +1,11 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: rosaassignment  # Corrected namespace name
-  name: rosa-assignment-role
+  name: {{ .Values.appName }}-role
+ # namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.appName }}-react-app
 rules:
-  - apiGroups: [""]
-    resources: ["services", "secrets"]
-    verbs: ["create", "get", "list", "watch", "update", "patch", "delete"]
-  - apiGroups: ["apps"]
-    resources: ["deployments"]
-    verbs: ["create", "get", "list", "watch", "update", "patch", "delete"]
-  - apiGroups: ["route.openshift.io"]
-    resources: ["routes"]
-    verbs: ["create", "get", "list", "watch", "update", "patch", "delete"]
+- apiGroups: [""]
+  resources: ["pods", "services", "configmaps", "endpoints"]
+  verbs: ["get", "list", "watch"]
