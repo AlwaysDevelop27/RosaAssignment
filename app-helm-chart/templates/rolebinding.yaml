@@ -1,13 +1,15 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: rosa-assignment-role-binding
-  namespace: rosaassignment  # Corrected namespace name
+  name: {{ .Values.appName }}-rolebinding
+  #namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.appName }}-react-app
 subjects:
-  - kind: ServiceAccount
-    name: openshift-gitops-argocd-application-controller
-    namespace: openshift-gitops
+- kind: ServiceAccount
+  name: {{ .Values.appName }}-sa
+  namespace: {{ .Values.namespace }}
 roleRef:
   kind: Role
-  name: rosa-assignment-role
+  name: {{ .Values.appName }}-role
   apiGroup: rbac.authorization.k8s.io
